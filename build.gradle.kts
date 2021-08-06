@@ -21,11 +21,14 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+
+	// https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+//	implementation("javax.servlet:javax.servlet-api:4.0.1")
+//	compileOnly("javax.servlet:javax.servlet-api")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("com.expediagroup", "graphql-kotlin-spring-server", "4.1.1")
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-webflux
-//	implementation("org.springframework.boot:spring-boot-starter-webflux:2.5.3")
+//	 https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-webflux
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
