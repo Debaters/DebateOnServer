@@ -18,18 +18,16 @@ repositories {
 extra["testcontainersVersion"] = "1.15.3"
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+//	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("org.springframework.boot:spring-boot-starter-security")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-
-	// https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
-//	implementation("javax.servlet:javax.servlet-api:4.0.1")
-//	compileOnly("javax.servlet:javax.servlet-api")
+	implementation ("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("com.expediagroup", "graphql-kotlin-spring-server", "4.1.1")
-//	 https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-webflux
+	implementation("io.jsonwebtoken:jjwt-api:0.11.1")
 
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.1")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.1")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
