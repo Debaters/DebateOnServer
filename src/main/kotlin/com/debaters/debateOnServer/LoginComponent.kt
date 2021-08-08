@@ -24,6 +24,9 @@ class LoginComponent {
     @Autowired
     lateinit var jwtChecker: JwtChecker
 
+    /**
+     * cookie 에 유저 정보를 넣어준다.
+     */
     @PostMapping("/login")
     fun login(@RequestBody user: UserCredential): Mono<ResponseEntity<Void>>{
         return Mono.justOrEmpty(users.find { user.name == it.name })
