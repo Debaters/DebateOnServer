@@ -1,5 +1,4 @@
 package com.debaters.debateOnServer
-
 import com.debaters.debateOnServer.models.Debate
 import com.debaters.debateOnServer.service.DebateService
 import com.expediagroup.graphql.server.operations.Query
@@ -18,5 +17,5 @@ class DebatesQuery : Query {
     fun names() = listOf("Zimin", "jack", "casy")
     fun contact() = "010-1111-1111"
 
-    fun homeDebates() = debateService.getDebates()
+    suspend fun homeDebates() = debateService.getDebates()
 }

@@ -1,12 +1,16 @@
 package com.debaters.debateOnServer.service
 
 import com.debaters.debateOnServer.models.Debate
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Component
 
 @Component
 class DebateService {
+    /**
+     * 현재 mock 데이터를 리턴함.
+     */
     @ExperimentalStdlibApi
-    fun getDebates(): List<Debate> {
+    suspend fun getDebates(): List<Debate> {
         return buildList {
             repeat(30) {
                 addAll(
