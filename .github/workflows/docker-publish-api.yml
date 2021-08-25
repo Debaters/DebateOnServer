@@ -30,8 +30,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         
-     - name: Check File tree
-       run: pwd && ls
+      - name: Check File tree
+        run: pwd && ls
        
 
       # Login against a Docker registry except on PR
