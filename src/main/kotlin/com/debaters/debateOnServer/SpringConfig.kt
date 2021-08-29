@@ -1,7 +1,5 @@
 package com.debaters.debateOnServer
 
-import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler
-import org.springframework.boot.web.reactive.error.ErrorAttributes
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpStatus
@@ -12,13 +10,10 @@ import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.web.server.SecurityWebFilterChain
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter
 import org.springframework.security.web.server.authentication.HttpStatusServerEntryPoint
-import org.springframework.security.core.userdetails.MapReactiveUserDetailsService
-import org.springframework.security.core.userdetails.User
 
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.stereotype.Component
-import org.springframework.web.reactive.function.server.RouterFunction
-import org.springframework.web.reactive.function.server.ServerResponse
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.reactive.CorsWebFilter
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
 
 
 @Configuration
@@ -52,4 +47,18 @@ class SpringConfig {
         return http.build()
     }
 
+    @Bean
+    fun corsWebFilter(): CorsWebFilter {
+        val config = CorsConfiguration().apply {
+            allowedOrigins = listOf("http://debaters.world")
+            maxAge = 8000L
+            allowedMethods = listOf("GET", "PUT")
+            allowedHeaders = listOf("api-key")
+        }
+
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", config)
+
+        return CorsWebFilter(source)
+    }
 }
