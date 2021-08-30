@@ -17,5 +17,7 @@ class DebatesQuery : Query {
     fun names() = listOf("Zimin", "jack", "casy")
     fun contact() = "010-1111-1111"
 
-    suspend fun homeDebates() = debateService.getDebates()
+    suspend fun homeDebates(offset: Int = 0, size: Int = 10) = debateService.getDebates(offset, size)
+
+    suspend fun debate(id: String) = debateService.findDebate(id)
 }
