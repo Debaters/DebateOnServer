@@ -1,8 +1,10 @@
 package com.debaters.debateOnServer.models
 
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
+import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.stereotype.Component
 
+@Document("debate")
 data class Debate(
     val debateId: String,
     @GraphQLDescription("토론의 제목입니다.")

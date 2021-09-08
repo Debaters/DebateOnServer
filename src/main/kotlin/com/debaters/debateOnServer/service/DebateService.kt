@@ -1,10 +1,14 @@
 package com.debaters.debateOnServer.service
 
 import com.debaters.debateOnServer.models.Debate
-import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.insert
 import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 
-@Component
+
+@Service
 class DebateService {
     @ExperimentalStdlibApi
     private val mockList = buildList {
@@ -52,22 +56,17 @@ class DebateService {
         return mockList.subList(offset, offset + size)
     }
 
+    @Autowired
+    private lateinit var mongoTemplate: MongoTemplate
+
     @ExperimentalStdlibApi
     suspend fun createDebate(
             title: String,
             description: String,
             creatorName: String,
     ): Boolean {
-        mockList.add(
-                0,
-                Debate(
-                        System.currentTimeMillis().toString(),
-                        title = title,
-                        description = description,
-                        creatorName = creatorName,
-                        creatorId = "a")
-        )
-        // demo value
+        val debate = Debate("1L", "제목", "메세지", "카카오택원", "1L")
+        println(mongoTemplate.insert(debate))
         return true
     }
 
