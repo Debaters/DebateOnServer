@@ -1,8 +1,8 @@
 package com.debaters.debateOnServer.domains.review.resolver
 
-import com.coxautodev.graphql.tools.GraphQLMutationResolver
 import com.debaters.debateOnServer.domains.review.dao.ReviewRepository
 import com.debaters.debateOnServer.domains.review.domain.Review
+import graphql.kickstart.tools.GraphQLMutationResolver
 import org.springframework.stereotype.Component
 
 @Component

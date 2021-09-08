@@ -29,11 +29,11 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-api:0.11.1")
 
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-	implementation("com.coxautodev:graphql-java-tools")
-	implementation("com.graphql-java:graphql-spring-boot-starter:5.0.2")
-	implementation("com.graphql-java:graphiql-spring-boot-starter:5.0.2")
-	implementation("com.graphql-java:graphql-java-tools:5.2.4")
-	implementation("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.3.RELEASE")
+	implementation("com.graphql-java:graphql-spring-boot-starter")
+	implementation("com.graphql-java:graphiql-spring-boot-starter")
+	implementation("com.graphql-java:graphql-java-tools")
+	implementation("com.graphql-java-kickstart:graphql-java-tools:11.1.1")
+	implementation("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.1")
@@ -43,12 +43,6 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("org.testcontainers:junit-jupiter")
-}
-
-dependencyManagement {
-	imports {
-		mavenBom("org.testcontainers:testcontainers-bom:${property("testcontainersVersion")}")
-	}
 }
 
 tasks.withType<KotlinCompile> {

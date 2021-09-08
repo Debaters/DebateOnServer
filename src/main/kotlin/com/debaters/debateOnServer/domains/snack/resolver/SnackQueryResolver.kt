@@ -3,7 +3,7 @@ package com.debaters.debateOnServer.domains.snack.resolver
 import com.debaters.debateOnServer.domains.review.domain.Review
 import com.debaters.debateOnServer.domains.snack.dao.SnackRepository
 import com.debaters.debateOnServer.domains.snack.domain.Snack
-import com.coxautodev.graphql.tools.GraphQLQueryResolver
+import graphql.kickstart.tools.GraphQLQueryResolver
 import org.springframework.data.mongodb.core.MongoOperations
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query

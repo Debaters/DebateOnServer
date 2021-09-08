@@ -1,8 +1,8 @@
 package com.debaters.debateOnServer.domains.snack.resolver
 
-import com.coxautodev.graphql.tools.GraphQLMutationResolver
 import com.debaters.debateOnServer.domains.snack.dao.SnackRepository
 import com.debaters.debateOnServer.domains.snack.domain.Snack
+import graphql.kickstart.tools.GraphQLMutationResolver
 import org.springframework.stereotype.Component
 import java.util.*
 

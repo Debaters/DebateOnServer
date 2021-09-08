@@ -1,7 +1,7 @@
 package com.debaters.debateOnServer.domains.review.resolver
 
-import com.coxautodev.graphql.tools.GraphQLQueryResolver
 import com.debaters.debateOnServer.domains.review.domain.Review
+import graphql.kickstart.tools.GraphQLQueryResolver
 import org.springframework.data.mongodb.core.MongoOperations
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
