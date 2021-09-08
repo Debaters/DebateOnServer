@@ -10,45 +10,65 @@ class DebateService {
     private val mockList = buildList {
         repeat(30) {
             addAll(
-                listOf(
-                    Debate(
-                        debateId = "${it * 4 + 0}",
-                        title = "짜장면은 찍먹이냐 부먹이냐",
-                        description = "논란의 정점을 찍어보도록 해요",
-                        creatorName = "zimin",
-                        creatorId = "a",
-                    ),
-                    Debate(
-                        debateId = "${it * 4 + 1}",
-                        title = "백신은 화이지/아스트라제네카",
-                        description = "백신은 잘 골라야 해 ",
-                        creatorName = "zimin",
-                        creatorId = "a",
-                    ),
-                    Debate(
-                        debateId = "${it * 4 + 2}",
-                        title = "iOS/Android",
-                        description = "What's your favorite mobile os?",
-                        creatorName = "zimin",
-                        creatorId = "a",
-                    ),
-                    Debate(
-                        debateId = "${it * 4 + 3}",
-                        title = "Windows/Max",
-                        description = "What's your favorite OS?",
-                        creatorName = "zimin",
-                        creatorId = "a",
-                    ),
-                )
+                    listOf(
+                            Debate(
+                                    debateId = "${it * 4 + 0}",
+                                    title = "짜장면은 찍먹이냐 부먹이냐",
+                                    description = "논란의 정점을 찍어보도록 해요",
+                                    creatorName = "zimin",
+                                    creatorId = "a",
+                            ),
+                            Debate(
+                                    debateId = "${it * 4 + 1}",
+                                    title = "백신은 화이지/아스트라제네카",
+                                    description = "백신은 잘 골라야 해 ",
+                                    creatorName = "zimin",
+                                    creatorId = "a",
+                            ),
+                            Debate(
+                                    debateId = "${it * 4 + 2}",
+                                    title = "iOS/Android",
+                                    description = "What's your favorite mobile os?",
+                                    creatorName = "zimin",
+                                    creatorId = "a",
+                            ),
+                            Debate(
+                                    debateId = "${it * 4 + 3}",
+                                    title = "Windows/Max",
+                                    description = "What's your favorite OS?",
+                                    creatorName = "zimin",
+                                    creatorId = "a",
+                            ),
+                    )
             )
         }
-    }
+    }.toMutableList()
+
     /**
      * 현재 mock 데이터를 리턴함.
      */
     @ExperimentalStdlibApi
     suspend fun getDebates(offset: Int = 0, size: Int = 10): List<Debate> {
         return mockList.subList(offset, offset + size)
+    }
+
+    @ExperimentalStdlibApi
+    suspend fun createDebate(
+            title: String,
+            description: String,
+            creatorName: String,
+    ): Boolean {
+        mockList.add(
+                0,
+                Debate(
+                        System.currentTimeMillis().toString(),
+                        title = title,
+                        description = description,
+                        creatorName = creatorName,
+                        creatorId = "a")
+        )
+        // demo value
+        return true
     }
 
     @ExperimentalStdlibApi

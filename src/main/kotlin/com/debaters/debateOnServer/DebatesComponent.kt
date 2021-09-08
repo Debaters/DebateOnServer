@@ -1,6 +1,8 @@
 package com.debaters.debateOnServer
 import com.debaters.debateOnServer.models.Debate
 import com.debaters.debateOnServer.service.DebateService
+import com.expediagroup.graphql.generator.annotations.GraphQLDescription
+import com.expediagroup.graphql.server.operations.Mutation
 import com.expediagroup.graphql.server.operations.Query
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -20,4 +22,26 @@ class DebatesQuery : Query {
     suspend fun homeDebates(offset: Int = 0, size: Int = 10) = debateService.getDebates(offset, size)
 
     suspend fun debate(id: String) = debateService.findDebate(id)
+}
+
+@ExperimentalStdlibApi
+@Component
+class DebateMutation : Mutation {
+    @Autowired
+    lateinit var debateService: DebateService
+
+    suspend fun createDebate(
+            @GraphQLDescription("토론의 제목입니다. 50자를 넘어가지 않습니다.")
+            title: String,
+            @GraphQLDescription("토론의 설명입니다. 100자를 넘어가지 않습니다.")
+            description: String,
+            @GraphQLDescription("작성자의 이름을 넣어주세요.")
+            creatorName: String,
+    ): Boolean {
+        return debateService.createDebate(
+                title,
+                description,
+                creatorName,
+        )
+    }
 }
