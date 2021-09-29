@@ -8,5 +8,5 @@ data class Comment(
     val debateId: String,
     val writerId: String,
     val writerName: String,
-    val writtenDateTime: LocalDateTime
+    val writtenDateTime: String
 )
