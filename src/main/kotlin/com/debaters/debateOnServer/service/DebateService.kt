@@ -1,63 +1,27 @@
 package com.debaters.debateOnServer.service
 
 import com.debaters.debateOnServer.models.Debate
+import com.debaters.debateOnServer.repositories.DebatesRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.insert
-import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 
 
 @Service
 class DebateService {
-    @ExperimentalStdlibApi
-    private val mockList = buildList {
-        repeat(30) {
-            addAll(
-                    listOf(
-                            Debate(
-                                    debateId = "${it * 4 + 0}",
-                                    title = "짜장면은 찍먹이냐 부먹이냐",
-                                    description = "논란의 정점을 찍어보도록 해요",
-                                    creatorName = "zimin",
-                                    creatorId = "a",
-                            ),
-                            Debate(
-                                    debateId = "${it * 4 + 1}",
-                                    title = "백신은 화이지/아스트라제네카",
-                                    description = "백신은 잘 골라야 해 ",
-                                    creatorName = "zimin",
-                                    creatorId = "a",
-                            ),
-                            Debate(
-                                    debateId = "${it * 4 + 2}",
-                                    title = "iOS/Android",
-                                    description = "What's your favorite mobile os?",
-                                    creatorName = "zimin",
-                                    creatorId = "a",
-                            ),
-                            Debate(
-                                    debateId = "${it * 4 + 3}",
-                                    title = "Windows/Max",
-                                    description = "What's your favorite OS?",
-                                    creatorName = "zimin",
-                                    creatorId = "a",
-                            ),
-                    )
-            )
-        }
-    }.toMutableList()
+
+    @Autowired
+    private lateinit var repository: DebatesRepository
 
     /**
      * 현재 mock 데이터를 리턴함.
      */
     @ExperimentalStdlibApi
     suspend fun getDebates(offset: Int = 0, size: Int = 10): List<Debate> {
-        return mockList.subList(offset, offset + size)
+        return repository.findAll(PageRequest.of(offset, size)).toList()
     }
-
-    @Autowired
-    private lateinit var mongoTemplate: MongoTemplate
 
     @ExperimentalStdlibApi
     suspend fun createDebate(
@@ -65,13 +29,23 @@ class DebateService {
             description: String,
             creatorName: String,
     ): Boolean {
-        val debate = Debate("1L", "제목", "메세지", "카카오택원", "1L")
-        println(mongoTemplate.insert(debate))
-        return true
+        val debate = Debate(
+                title = title,
+                description = description,
+                creatorName = creatorName,
+                creatorId = "abc"
+        )
+
+        return try {
+            repository.save(debate)
+            true
+        } catch (ex: Exception) {
+            false
+        }
     }
 
     @ExperimentalStdlibApi
     suspend fun findDebate(id: String): Debate? {
-        return mockList.find { it.debateId == id }
+        return repository.findById(id).get()
     }
 }
