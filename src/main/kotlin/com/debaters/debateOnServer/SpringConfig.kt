@@ -1,7 +1,14 @@
 package com.debaters.debateOnServer
 
+import com.mongodb.ConnectionString
+import com.mongodb.MongoClientSettings
+import com.mongodb.client.MongoClient
+import com.mongodb.client.MongoClients
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 import org.springframework.http.HttpStatus
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
@@ -10,7 +17,6 @@ import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.web.server.SecurityWebFilterChain
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter
 import org.springframework.security.web.server.authentication.HttpStatusServerEntryPoint
-
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.reactive.CorsWebFilter
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
@@ -60,5 +66,26 @@ class SpringConfig {
         source.registerCorsConfiguration("/**", config)
 
         return CorsWebFilter(source)
+    }
+}
+
+@Configuration
+@EnableMongoRepositories(basePackages = ["com.debaters.debateOnServer.repositories"])
+class DBConfig : AbstractMongoClientConfiguration() {
+
+    @Value("\${spring.data.mongodb.uri}")
+    lateinit var mongoUri: String
+
+    override fun getDatabaseName(): String {
+        return "debates"
+    }
+
+    override fun mongoClient(): MongoClient {
+        val connectionString = ConnectionString(mongoUri)
+        val mongoClientSettings = MongoClientSettings.builder()
+                .applyConnectionString(connectionString)
+                .build()
+
+        return MongoClients.create(mongoClientSettings)
     }
 }
