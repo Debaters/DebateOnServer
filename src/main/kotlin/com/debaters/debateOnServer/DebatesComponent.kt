@@ -1,5 +1,8 @@
 package com.debaters.debateOnServer
+
+import com.debaters.debateOnServer.models.Comment
 import com.debaters.debateOnServer.models.Debate
+import com.debaters.debateOnServer.service.CommentService
 import com.debaters.debateOnServer.service.DebateService
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Mutation
@@ -30,6 +33,9 @@ class DebateMutation : Mutation {
     @Autowired
     lateinit var debateService: DebateService
 
+    @Autowired
+    lateinit var commentService: CommentService
+
     suspend fun createDebate(
             @GraphQLDescription("토론의 제목입니다. 50자를 넘어가지 않습니다.")
             title: String,
@@ -43,5 +49,14 @@ class DebateMutation : Mutation {
                 description,
                 creatorName,
         )
+    }
+
+    suspend fun addComment(
+            @GraphQLDescription("댓글을 추가할 Debate 의 id")
+            debateId: String,
+            @GraphQLDescription("추가할 댓글 정보")
+            comment: Comment,
+    ) : Boolean {
+        return commentService.writeComment(debateId, comment)
     }
 }

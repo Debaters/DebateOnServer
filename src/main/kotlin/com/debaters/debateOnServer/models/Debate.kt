@@ -15,4 +15,5 @@ data class Debate(
         val description: String,
         val creatorName: String,
         val creatorId: String,
+        val comments: MutableList<Comment> = mutableListOf()
 )
