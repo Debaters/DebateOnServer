@@ -44,8 +44,8 @@ jobs:
           echo $DEV_ENV_FILE >> application.properties
           cat application.properties
         shell: bash
-          env:
-           DEV_ENV_FILE: ${{secrets.PROPERTIES}}
+        env:
+          DEV_ENV_FILE: ${{secrets.PROPERTIES}}
       - name: Build with Gradle
         run: ./gradlew bootJar
 
