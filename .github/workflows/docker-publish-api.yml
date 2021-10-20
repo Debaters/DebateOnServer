@@ -47,7 +47,7 @@ jobs:
         env:
           DEV_ENV_FILE: ${{secrets.PROPERTIES}}
       - name: Build with Gradle
-        run: ./gradlew bootJar
+        run: ./gradlew build
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
