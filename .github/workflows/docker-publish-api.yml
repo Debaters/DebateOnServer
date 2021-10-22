@@ -39,20 +39,16 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
 
-      - name: print properties
-        run: |
-          echo $DEV_ENV_FILE >> application.properties
-          cat application.properties
-        shell: bash
-        env:
-          DEV_ENV_FILE: ${{secrets.PROPERTIES}}
-              
-      - name: upload properties
-        uses: actions/upload-artifact@v2
+      - name: Write properties by base64 
+        uses: timheuer/base64-to-file@v1.1
         with:
-          name: DEV_ENV_FILE
-          path: application.properties
- 
+          fileName: 'application.properties'
+          encodedString: ${{ secrets.BASE64PROPERTIES }}
+      
+      - name: move files
+        run: |
+          mv /home/runner/work/_temp/application.properties application.properties
+
       - name: Build with Gradle
         run: ./gradlew build
 
