@@ -46,6 +46,12 @@ jobs:
         shell: bash
         env:
           DEV_ENV_FILE: ${{secrets.PROPERTIES}}
+              - name: Upload a Build Artifact
+      - name: upload properties
+        uses: actions/upload-artifact@v2
+        with:
+          name: DEV_ENV_FILE
+          path: application.properties
       - name: Build with Gradle
         run: ./gradlew build
 
