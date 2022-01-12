@@ -4,6 +4,7 @@ import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
+import graphql.execution.DataFetcherExceptionHandler
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -66,6 +67,11 @@ class SpringConfig {
         source.registerCorsConfiguration("/**", config)
 
         return CorsWebFilter(source)
+    }
+
+    @Bean
+    fun dataFetchExceptionHandler(): DataFetcherExceptionHandler {
+        return GlobalExceptionHandler()
     }
 }
 
