@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 
 @Service
@@ -33,13 +34,14 @@ class DebateService {
                 title = title,
                 description = description,
                 creatorName = creatorName,
-                creatorId = "abc"
+                creatorId = "abc",
         )
 
         return try {
             repository.save(debate)
             true
         } catch (ex: Exception) {
+
             false
         }
     }

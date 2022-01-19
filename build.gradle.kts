@@ -24,7 +24,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb:2.5.4")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("com.expediagroup", "graphql-kotlin-spring-server", "4.1.1")
+
+	implementation("com.expediagroup", "graphql-kotlin-spring-server", "5.3.1")
+	implementation("com.graphql-java:graphql-java-extended-scalars:17.0")
+
 	implementation("io.jsonwebtoken:jjwt-api:0.11.1")
 
 	implementation("io.sentry:sentry-spring-boot-starter:5.5.2")
