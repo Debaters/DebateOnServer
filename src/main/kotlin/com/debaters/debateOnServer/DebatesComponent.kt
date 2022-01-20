@@ -22,6 +22,7 @@ class DebatesQuery : Query {
 
     fun titles() = listOf("korean and japan", "new idea")
     fun names() = listOf("Zimin", "jack", "casy")
+    fun members() = listOf("김", "김", "오",  "최", "변")
     fun contact() = "010-1111-1111"
 
     suspend fun homeDebates(offset: Int = 0, size: Int = 10) = debateService.getDebates(offset, size)

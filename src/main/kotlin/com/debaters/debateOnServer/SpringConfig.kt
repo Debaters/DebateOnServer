@@ -1,14 +1,12 @@
 package com.debaters.debateOnServer
 
-import com.mongodb.ConnectionString
-import com.mongodb.MongoClientSettings
-import com.mongodb.client.MongoClient
-import com.mongodb.client.MongoClients
-import org.springframework.beans.factory.annotation.Value
+import com.debaters.debateOnServer.graphql.DefaultSchemeHooks
+import com.expediagroup.graphql.generator.SchemaGeneratorConfig
+import graphql.execution.DataFetcherExceptionHandler
+import graphql.scalars.ExtendedScalars
+import graphql.schema.GraphQLScalarType
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 import org.springframework.http.HttpStatus
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
@@ -28,6 +26,22 @@ import org.springframework.web.reactive.function.server.ServerRequest
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
 class SpringConfig {
+
+    @Bean
+    fun dateTimeType(): GraphQLScalarType {
+        return ExtendedScalars.DateTime;
+    }
+
+    @Bean
+    fun schemaGenerator(): SchemaGeneratorConfig {
+        val config = SchemaGeneratorConfig(
+                supportedPackages = listOf(
+                        "com.debaters.debateOnServer.models",
+                ),
+                hooks = DefaultSchemeHooks()
+        )
+        return config
+    }
 
     @Bean
     @Throws(Exception::class)
@@ -69,25 +83,10 @@ class SpringConfig {
 
         return CorsWebFilter(source)
     }
-}
 
-@Configuration
-@EnableMongoRepositories(basePackages = ["com.debaters.debateOnServer.repositories"])
-class DBConfig : AbstractMongoClientConfiguration() {
-
-    @Value("\${spring.data.mongodb.uri}")
-    lateinit var mongoUri: String
-
-    override fun getDatabaseName(): String {
-        return "debates"
-    }
-
-    override fun mongoClient(): MongoClient {
-        val connectionString = ConnectionString(mongoUri)
-        val mongoClientSettings = MongoClientSettings.builder()
-                .applyConnectionString(connectionString)
-                .build()
-
-        return MongoClients.create(mongoClientSettings)
+    @Bean
+    fun dataFetchExceptionHandler(): DataFetcherExceptionHandler {
+        return GlobalExceptionHandler()
     }
 }
+
