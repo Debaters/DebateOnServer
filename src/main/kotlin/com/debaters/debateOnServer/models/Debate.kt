@@ -24,7 +24,9 @@ data class Debate(
         val description: String,
         val creatorName: String,
         val creatorId: String,
+        @GraphQLDescription("처음 등록된 시간입니다.")
         val createdTimestamp: OffsetDateTime = OffsetDateTime.now(),
+        @GraphQLDescription("마지막으로 변경된 시간입니다. 댓글이 업데이트 되어도 변경됩니다.")
         val updatedTimestamp: OffsetDateTime = OffsetDateTime.now(),
         val comments: MutableList<Comment> = mutableListOf()
 )
