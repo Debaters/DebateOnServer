@@ -26,8 +26,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("com.expediagroup", "graphql-kotlin-spring-server", "4.1.1")
 	implementation("io.jsonwebtoken:jjwt-api:0.11.1")
-
-
+	implementation("javax.servlet:javax.servlet-api:4.0.1")
 
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.1")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.1")

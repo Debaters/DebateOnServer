@@ -1,14 +1,16 @@
 package com.debaters.debateOnServer
 
+import com.debaters.debateOnServer.context.MyGraphQLContext
 import com.debaters.debateOnServer.models.Comment
-import com.debaters.debateOnServer.models.Debate
 import com.debaters.debateOnServer.service.CommentService
 import com.debaters.debateOnServer.service.DebateService
+import com.debaters.debateOnServer.service.NicknameService
 import com.expediagroup.graphql.generator.annotations.GraphQLDescription
 import com.expediagroup.graphql.server.operations.Mutation
 import com.expediagroup.graphql.server.operations.Query
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import java.util.logging.Logger
 
 
 @ExperimentalStdlibApi
@@ -30,11 +32,17 @@ class DebatesQuery : Query {
 @ExperimentalStdlibApi
 @Component
 class DebateMutation : Mutation {
+
+    val LOG = Logger.getLogger(this.javaClass.name)
+
     @Autowired
     lateinit var debateService: DebateService
 
     @Autowired
     lateinit var commentService: CommentService
+
+    @Autowired
+    lateinit var nicknameService: NicknameService
 
     suspend fun createDebate(
             @GraphQLDescription("토론의 제목입니다. 50자를 넘어가지 않습니다.")
@@ -58,5 +66,13 @@ class DebateMutation : Mutation {
             comment: Comment,
     ) : Boolean {
         return commentService.writeComment(debateId, comment)
+    }
+
+    suspend fun getNickname(
+        context: MyGraphQLContext
+    ) : String {
+        var userAgent: String = context.getHTTPRequestHeader("user-agent").toString()
+        LOG.info("userAgent: \n$userAgent")
+        return nicknameService.getNickNameById(userAgent)
     }
 }
