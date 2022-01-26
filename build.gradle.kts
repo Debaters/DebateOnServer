@@ -29,6 +29,9 @@ dependencies {
 	implementation("com.graphql-java:graphql-java-extended-scalars:17.0")
 
 	implementation("io.jsonwebtoken:jjwt-api:0.11.1")
+	implementation("javax.servlet:javax.servlet-api:4.0.1")
+	implementation("io.sentry:sentry-spring-boot-starter:5.5.2")
+	implementation("io.sentry:sentry-logback:5.5.2")
 
 	implementation("io.sentry:sentry-spring-boot-starter:5.5.2")
 	implementation("io.sentry:sentry-logback:5.5.2")

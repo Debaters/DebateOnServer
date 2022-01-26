@@ -17,8 +17,13 @@ import java.util.logging.Logger
 @Component
 class DebatesQuery : Query {
 
+    val LOG = Logger.getLogger(this.javaClass.name)
+
     @Autowired
     lateinit var debateService: DebateService
+
+    @Autowired
+    lateinit var nicknameService: NicknameService
 
     fun titles() = listOf("korean and japan", "new idea")
     fun names() = listOf("Zimin", "jack", "casy")
@@ -29,6 +34,14 @@ class DebatesQuery : Query {
     suspend fun homeDebates(offset: Int = 0, size: Int = 10) = debateService.getDebates(offset, size)
 
     suspend fun debate(id: String) = debateService.findDebate(id)
+
+    suspend fun getNickname(
+        context: MyGraphQLContext
+    ) : String {
+        var userAgent: String = context.getHTTPRequestHeader("user-agent").toString()
+        LOG.info("userAgent: \n$userAgent")
+        return nicknameService.getNickNameById(userAgent)
+    }
 }
 
 @ExperimentalStdlibApi
@@ -42,9 +55,6 @@ class DebateMutation : Mutation {
 
     @Autowired
     lateinit var commentService: CommentService
-
-    @Autowired
-    lateinit var nicknameService: NicknameService
 
     suspend fun createDebate(
             @GraphQLDescription("토론의 제목입니다. 50자를 넘어가지 않습니다.")
@@ -70,11 +80,4 @@ class DebateMutation : Mutation {
         return commentService.writeComment(debateId, comment)
     }
 
-    suspend fun getNickname(
-        context: MyGraphQLContext
-    ) : String {
-        var userAgent: String = context.getHTTPRequestHeader("user-agent").toString()
-        LOG.info("userAgent: \n$userAgent")
-        return nicknameService.getNickNameById(userAgent)
-    }
 }
