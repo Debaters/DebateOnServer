@@ -48,6 +48,10 @@ jobs:
       - name: move files
         run: |
           mv /home/runner/work/_temp/application.properties application.properties
+          
+      - name: Print properties
+        run: |
+          cat application.properties
 
       - name: Build with Gradle
         run: ./gradlew build
