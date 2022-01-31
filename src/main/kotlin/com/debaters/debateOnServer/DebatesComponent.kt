@@ -23,6 +23,9 @@ class DebatesQuery : Query {
     lateinit var debateService: DebateService
 
     @Autowired
+    lateinit var commentService: CommentService
+
+    @Autowired
     lateinit var nicknameService: NicknameService
 
     fun titles() = listOf("korean and japan", "new idea")
@@ -30,6 +33,9 @@ class DebatesQuery : Query {
     fun members() = listOf("김", "김", "오",  "최", "변")
     fun submarine() = listOf("잠수함패치의 증거")
     fun contact() = "010-1111-1111"
+
+    suspend fun getComments(debateId: String, offset: Int, size: Int) =
+            commentService.getComments(debateId, offset, size)
 
     suspend fun homeDebates(offset: Int = 0, size: Int = 10) = debateService.getDebates(offset, size)
 
