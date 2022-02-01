@@ -1,17 +1,13 @@
 package com.debaters.debateOnServer.service
 
 import com.debaters.debateOnServer.models.Comment
-import com.debaters.debateOnServer.models.Debate
 import com.debaters.debateOnServer.repositories.CommentsRepository
-import com.debaters.debateOnServer.repositories.DebatesRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.domain.Example
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.OffsetDateTime
-import java.time.ZonedDateTime
+import kotlin.math.min
 
 private const val DEFAULT_PAGE_SIZE = 10
 
@@ -23,7 +19,10 @@ class CommentService {
 
     @ExperimentalStdlibApi
     suspend fun getComments(debateId: String, offset: Int = 0, size: Int = DEFAULT_PAGE_SIZE): List<Comment> {
-        return commentsRepository.findAllByDebateId(debateId).subList(offset, offset + size)
+        return withContext(Dispatchers.IO) {
+            val comments = commentsRepository.findAllByDebateId(debateId)
+            comments.subList(offset, offset + min(size, comments.size))
+        }
     }
 
     suspend fun writeComment(debateId: String, comment: Comment): Boolean {
